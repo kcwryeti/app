@@ -47,11 +47,9 @@
 <script src="{{ asset('assets/js/UserApp.js') }}"></script>
 <script>
 $(document).ready(function () {
-var $table = $('.js-user-table');
-var postApp = new UserApp($table);
-let rows = $('.js-user-table tr').length;
-console.log(rows);
-})
+    var $table = $('.js-user-table');
+    var postApp = new UserApp($table);
+});
 </script>
 {% endblock %}
 
