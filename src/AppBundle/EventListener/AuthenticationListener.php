@@ -25,7 +25,6 @@ class AuthenticationListener
     {
         $this->logger = $logger;
         $this->requestStack = $requestStack;
-
     }
 
     public function onAuthenticationFailure(AuthenticationFailureEvent $event)
