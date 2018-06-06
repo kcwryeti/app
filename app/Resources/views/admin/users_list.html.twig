@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <form action="{{ path('admin_users_list') }}" method="get">
+        <div class="row">
+            <div class="form-group"><input name="filter" type="text" class="form-control form-control-sm"></div>
+            <div class="form-group"><button type="submit" class="btn btn-sm btn-info form-control-sm"> Szukaj</button></div>
+        </div>
+    </form>
+    <table class="table table-sm table-striped js-user-table" data-url="{{ url('app_api_user_list') }}">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nick</th>
+            <th scope="col">Email</th>
+            <th scope="col">Data utworzenia</th>
+            <th scope="col">Admin/Blog admin</th>
+            <th scope="col">Aktywny</th>
+            <th scope="col">Usuń</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td scope="row">{{ user.id }}</td>
+                <td class="js-username">{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.createdAt is empty ? "" : user.createdAt | date('y.m.d h:m') }}</td>
+                <td>
+                    <div class="js-user-roles">
+                        <input style="margin-right: 5ch" type="checkbox" value="ROLE_ADMIN" {% if 'ROLE_ADMIN' in user.roles %}checked{% endif %}>
+                        <input type="checkbox" value="ROLE_BLOG_ADMIN" {% if 'ROLE_BLOG_ADMIN' in user.roles %}checked{% endif %}>
+                    </div>
+                </td>
+                <td><div class=""><input class="js-user-is-active"type="checkbox" {% if user.isActive %}checked{% endif %}></div></td>
+                <td><a href="#" class="js-user-delete"><i class="fas fa-user-slash"></i> usuń</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="navigation text-center">
+        {{ knp_pagination_render(users) }}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset('assets/js/UserApp.js') }}"></script>
+<script>
+$(document).ready(function () {
+var $table = $('.js-user-table');
+var postApp = new UserApp($table);
+let rows = $('.js-user-table tr').length;
+console.log(rows);
+})
+</script>
+{% endblock %}
+

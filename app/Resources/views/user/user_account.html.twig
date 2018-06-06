@@ -1,0 +1,6 @@
+{% extends 'base.html.twig' %}
+{% block body%}
+    <h4> Użytkownik : {{ user.username }}</h4>
+    <h4> Email : {{ user.email }}</h4>
+    <a href="{{ path('user_password_change') }}" class="btn btn-sm btn-success" role="button">Zmień hasło</a>
+{% endblock %}
